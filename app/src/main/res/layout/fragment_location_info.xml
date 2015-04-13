@@ -26,5 +26,5 @@
         android:stateListAnimator="@null"
         android:src="@drawable/ic_add_white_24dp"
         android:tint="@android:color/white"
-        android:elevation="3dp" />
+        android:elevation="3dp"/>
 </RelativeLayout>

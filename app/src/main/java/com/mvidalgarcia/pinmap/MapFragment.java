@@ -13,18 +13,18 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-/**
- * A fragment that launches other parts of the demo application.
- */
+import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
+
 public class MapFragment extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         // inflate and return the layout
         View v = inflater.inflate(R.layout.fragment_location_info, container,
@@ -45,23 +45,67 @@ public class MapFragment extends Fragment {
         double latitude = 17.385044;
         double longitude = 78.486671;
 
-        // create marker
+        // Create marker
         MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
+                new LatLng(latitude, longitude)).title("My trip to New Delhi").snippet("View more details");
 
         // Changing marker icon
         marker.icon(BitmapDescriptorFactory
                 .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
-        // adding marker
+        // Adding marker
         googleMap.addMarker(marker);
+        /*
         CameraPosition cameraPosition = new CameraPosition.Builder()
                 .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory
                 .newCameraPosition(cameraPosition));
+        */
 
-        // Perform any camera updates here
+        // Place camera in last marker position (no zoom)
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(new LatLng(17.385044, 78.486671)).build();
+        googleMap.animateCamera(CameraUpdateFactory
+                .newCameraPosition(cameraPosition));
+
+        // Disable toolbar (shown when marker is tapped)
+        googleMap.getUiSettings().setMapToolbarEnabled(false);
+
+
+        // "Details" info window click listener
+        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                goToPinDetails("My trip to New Delhi");
+            }
+        });
+
+
+        // Callback to pin form
+        v.findViewById(R.id.pin_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToPinForm();
+            }
+        });
+
         return v;
+    }
+
+    public void goToPinForm() {
+        Fragment fragment = new PinFormFragment();
+        //Bundle data = new Bundle();
+        //data.putString("Test","Banana");
+        //fragment.setArguments(data);
+        ((MaterialNavigationDrawer)this.getActivity()).setFragmentChild(fragment,"Pin new place!");
+    }
+
+    public void goToPinDetails(String pinTitle) {
+        Fragment fragment = new PinDetailsFragment();
+        //Bundle data = new Bundle();
+        //data.putString("Test","Banana");
+        //fragment.setArguments(data);
+        ((MaterialNavigationDrawer)this.getActivity()).setFragmentChild(fragment, pinTitle);
     }
 
     @Override
@@ -87,4 +131,5 @@ public class MapFragment extends Fragment {
         super.onLowMemory();
         mMapView.onLowMemory();
     }
+
 }

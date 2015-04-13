@@ -10,6 +10,7 @@
         <item name="singleAccount">true</item>
         <item name="learningPattern">false</item>
         <item name="rippleBackport">true</item>
+        <item name="toolbarElevation">true</item>
     </style>
 
 </resources>

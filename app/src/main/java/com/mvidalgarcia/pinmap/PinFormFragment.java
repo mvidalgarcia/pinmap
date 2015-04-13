@@ -9,9 +9,10 @@ package com.mvidalgarcia.pinmap;
     import android.view.LayoutInflater;
     import android.view.View;
     import android.view.ViewGroup;
+    import android.widget.Toast;
 
 
-public class FragmentForm extends Fragment {
+public class PinFormFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -22,7 +23,19 @@ public class FragmentForm extends Fragment {
         LayoutInflater localInflater = inflater.cloneInContext(context);
 
         // Inflate using the cloned inflater, not the passed in default
-        return localInflater.inflate(R.layout.form_fragment, container, false);
+        View view =  localInflater.inflate(R.layout.pin_form_fragment, container, false);
+
+         /* Callback to create new pin */
+
+        view.findViewById(R.id.new_pin_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //goToPinForm();
+                Toast.makeText(getActivity(), "Pin pressed",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return view;
 
     }
 

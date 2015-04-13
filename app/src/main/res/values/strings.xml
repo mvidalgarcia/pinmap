@@ -2,5 +2,7 @@
     <string name="app_name">Pinmap</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_maps">Map</string>
-    <string name="action_plus">+</string>
+    <!-- Pin form -->
+    <string name="title">Title</string>
+    <string name="comments">Comments</string>
 </resources>

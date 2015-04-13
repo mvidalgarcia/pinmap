@@ -2,6 +2,7 @@ package com.mvidalgarcia.pinmap;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
@@ -20,11 +21,15 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer implements Mate
         this.setAccountListener(this);
 
         this.addSection(newSection("My map", new MapFragment()).setSectionColor(Color.parseColor("#607D8B")));
-        this.addSection(newSection("Let's pin", new FragmentForm()).setSectionColor(Color.parseColor("#607D8B")));
+        this.addSection(newSection("My stats", new StatisticsFragment()).setSectionColor(Color.parseColor("#607D8B")));
+
+        // Go to map when 'back' is tapped
+        this.setBackPattern(MaterialNavigationDrawer.BACKPATTERN_BACK_TO_FIRST);
     }
 
     @Override
     public void onAccountOpening(MaterialAccount account) {
+        Log.i("MyNavigationDrawer", "FAB pressed");
         Toast.makeText(this, "onAccountOpening", Toast.LENGTH_SHORT).show();
     }
 
@@ -32,4 +37,5 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer implements Mate
     public void onChangeAccount(MaterialAccount newAccount) {
         Toast.makeText(this, "onChangeAccount", Toast.LENGTH_SHORT).show();
     }
+
 }
