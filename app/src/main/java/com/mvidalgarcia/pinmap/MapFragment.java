@@ -1,7 +1,9 @@
 package com.mvidalgarcia.pinmap;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +17,12 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mvidalgarcia.pinmap.model.Pin;
+import com.mvidalgarcia.pinmap.ws.PinWS;
+import com.mvidalgarcia.pinmap.ws.impl.PinREST;
+
+import java.util.AbstractList;
+import java.util.ArrayList;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
@@ -130,6 +138,30 @@ public class MapFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState)
+    {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
+                .permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        try {
+            Log.i("MyNavidationDrawer", "PROBANDO METODO JAVA");
+            PinWS service = new PinREST();
+            //ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
+            //Pin pin = service.getPinById(1);
+            Pin pin = new Pin("JJJJune 2056 in Nigeria", "Nigeria rules!",
+                    3.0, 52.431898, 14.740681, "photo_nigeria", 1508116466, "904972304704039106999");
+            service.insertPin(pin);
+            //service.deletePin(1);
+            ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
+            if (pin != null)
+                Log.i("RETURN", String.valueOf(pins.size()));
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
 }
