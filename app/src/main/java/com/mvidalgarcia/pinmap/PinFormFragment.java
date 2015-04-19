@@ -3,11 +3,9 @@ package com.mvidalgarcia.pinmap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,16 +88,11 @@ public class PinFormFragment extends Fragment {
                         epoch = System.currentTimeMillis() / 1000;
                     }
                     else {
-                        photo_url = PHOTOS_URI+String.valueOf(epoch)+".jpg";
+                        photo_url = PHOTOS_URI + String.valueOf(epoch) + ".jpg";
                     }
                     EditText place = (EditText) view.findViewById(R.id.editTextPlace);
-                    double lat = GeocodingLocation .getLatitudeFromLocation(place.getText().toString(), getActivity());
-                    double lng = GeocodingLocation .getLongitudeFromLocation(place.getText().toString(), getActivity());
-                    String toastTxt = title.getText() + " " + description.getText() +
-                            " " + String.valueOf(rating.getRating()) + " " + String.valueOf(epoch);
-                    if (lat != -1 && lng != -1)
-                        toastTxt += " " + lat + " " + lng;
-                    Toast.makeText(getActivity(), toastTxt, Toast.LENGTH_SHORT).show();
+                    double lat = GeocodingLocation.getLatitudeFromLocation(place.getText().toString(), getActivity());
+                    double lng = GeocodingLocation.getLongitudeFromLocation(place.getText().toString(), getActivity());
                     PinWS service = new PinREST();
                     Pin pin = new Pin(title.getText().toString(), description.getText().toString(),
                             rating.getRating(), lat, lng, photo_url, (int)epoch, GPLUSID);
@@ -108,7 +101,7 @@ public class PinFormFragment extends Fragment {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // Go to map (Simulate tapping back button)
+                    // Go to map (Simulates tapping back button)
                     getActivity().onBackPressed();
                 }
             }

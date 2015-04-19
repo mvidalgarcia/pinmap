@@ -9,13 +9,10 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.mvidalgarcia.pinmap.business.GeocodingLocation;
 import com.mvidalgarcia.pinmap.model.Pin;
 import com.mvidalgarcia.pinmap.tasks.ImageLoadTask;
 import com.mvidalgarcia.pinmap.ws.PinWS;
@@ -88,11 +85,12 @@ public class PinDetailsFragment extends Fragment {
         description.setText(pin.getDescription());
         date.setText(epochToDateString(pin.getDate()));
         ratingBar.setRating(pin.getRating());
+        // Asynchronous task to print photo on ImageView
         new ImageLoadTask(pin.getPhoto(), imageView).execute();
     }
 
     public String epochToDateString(long epoch) {
-        Date date = new Date( epoch * 1000 );
+        Date date = new Date(epoch * 1000);
         DateFormat df = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss");
         return df.format(date);
     }

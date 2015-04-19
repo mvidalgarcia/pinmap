@@ -1,8 +1,5 @@
 package com.mvidalgarcia.pinmap.model;
 
-/**
- * Created by mvidalgarcia on 15/4/15.
- */
 public class Pin {
     private int id;
     private String title;

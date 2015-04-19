@@ -21,7 +21,6 @@ import com.mvidalgarcia.pinmap.model.Pin;
 import com.mvidalgarcia.pinmap.ws.PinWS;
 import com.mvidalgarcia.pinmap.ws.impl.PinREST;
 
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.HashMap;
 
