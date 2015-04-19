@@ -3,11 +3,7 @@ package com.mvidalgarcia.pinmap;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.ContextThemeWrapper;
@@ -15,10 +11,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.RadioButton;
 import android.widget.RatingBar;
 import android.widget.Toast;
-import android.os.Message;
 
 import com.mvidalgarcia.pinmap.business.GeocodingLocation;
 
@@ -47,6 +41,25 @@ public class PinFormFragment extends Fragment {
             }
         });
 
+        /* Callbacks to manage radio buttons */
+
+        view.findViewById(R.id.radioButtonSearch).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText place = (EditText) getView().findViewById(R.id.editTextPlace);
+                place.setVisibility(View.VISIBLE);
+            }
+        });
+
+        view.findViewById(R.id.radioButtonGPS).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText place = (EditText) getView().findViewById(R.id.editTextPlace);
+                place.setVisibility(View.GONE);
+            }
+        });
+
+
          /* Callback to create new pin */
 
         view.findViewById(R.id.new_pin_button).setOnClickListener(new View.OnClickListener() {
@@ -70,43 +83,8 @@ public class PinFormFragment extends Fragment {
             }
         });
 
-
-        /* Callbacks to manage radio buttons */
-
-        view.findViewById(R.id.radioButtonSearch).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText place = (EditText) getView().findViewById(R.id.editTextPlace);
-                place.setVisibility(View.VISIBLE);
-            }
-        });
-
-        view.findViewById(R.id.radioButtonGPS).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EditText place = (EditText) getView().findViewById(R.id.editTextPlace);
-                place.setVisibility(View.GONE);
-            }
-        });
-
         return view;
 
-    }
-
-    private class GeocoderHandler extends Handler {
-        @Override
-        public void handleMessage(Message message) {
-            String locationAddress;
-            switch (message.what) {
-                case 1:
-                    Bundle bundle = message.getData();
-                    locationAddress = bundle.getString("address");
-                    break;
-                default:
-                    locationAddress = null;
-            }
-            Toast.makeText(getActivity(), locationAddress, Toast.LENGTH_SHORT).show();
-        }
     }
 
 }
