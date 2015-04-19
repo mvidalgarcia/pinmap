@@ -1,9 +1,16 @@
 package com.mvidalgarcia.pinmap;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
+
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 import it.neokree.materialnavigationdrawer.elements.MaterialAccount;
@@ -11,6 +18,8 @@ import it.neokree.materialnavigationdrawer.elements.listeners.MaterialAccountLis
 
 
 public class MyNavigationDrawer extends MaterialNavigationDrawer implements MaterialAccountListener {
+
+    static final int SELECT_PHOTO = 100;
 
     @Override
     public void init(Bundle savedInstanceState) {
@@ -37,6 +46,24 @@ public class MyNavigationDrawer extends MaterialNavigationDrawer implements Mate
     @Override
     public void onChangeAccount(MaterialAccount newAccount) {
         Toast.makeText(this, "onChangeAccount", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+        switch(requestCode) {
+            case SELECT_PHOTO:
+                if(resultCode == RESULT_OK){
+                    Uri selectedImage = imageReturnedIntent.getData();
+                    InputStream imageStream = null;
+                    try {
+                        imageStream = getContentResolver().openInputStream(selectedImage);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                    Bitmap yourSelectedImage = BitmapFactory.decodeStream(imageStream);
+                }
+        }
     }
 
 }

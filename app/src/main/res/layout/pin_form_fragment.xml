@@ -1,51 +1,104 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context=".PinFormFragment">
-    <!--android:background="@color/background_material_light"-->
-
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/commentsEditText"
-        android:hint="@string/comments"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="87dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
 
     <RatingBar
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/ratingBar"
-        android:layout_above="@+id/new_pin_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="45dp" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="25dp"
+        android:layout_above="@+id/pick_button"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Pin it!"
-        android:id="@+id/new_pin_button"
-        android:layout_alignParentBottom="true"
+        android:text="@string/pick_photo"
+        android:id="@+id/pick_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_above="@+id/new_pin_button"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="44dp" />
+        style="?android:attr/borderlessButtonStyle"
+        android:textColor="#ff0097a7"
+        android:textSize="14sp" />
 
-    <EditText
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/titleEditText"
-        android:hint="@string/title"
-        android:layout_alignParentTop="true"
+        android:text="@string/pin_it"
+        android:id="@+id/new_pin_button"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="#ff0097a7"
+        android:textColor="#ffffffff" />
+
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/radioGroup"
+        android:layout_below="@+id/formDescription"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/commentsEditText"
-        android:layout_alignEnd="@+id/commentsEditText"
+        android:layout_marginTop="48dp"
+        android:weightSum="1"
+        android:layout_toLeftOf="@+id/new_pin_button"
+        android:layout_toStartOf="@+id/new_pin_button">
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/gps"
+            android:id="@+id/radioButtonGPS"
+            android:checked="true" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/search_place"
+            android:id="@+id/radioButtonSearch"
+            android:checked="false" />
+
+    </RadioGroup>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/formDescription"
+        android:layout_gravity="center_horizontal"
+        android:hint="@string/description"
+        android:layout_below="@+id/formTitle"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/formTitle"
+        android:hint="@string/title"
+        android:textSize="35dp"
+        android:singleLine="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <EditText
+        android:layout_width="172dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/editTextPlace"
+        android:inputType="text"
+        android:layout_alignBottom="@+id/radioGroup"
+        android:layout_alignLeft="@+id/new_pin_button"
+        android:layout_alignStart="@+id/new_pin_button"
+        android:visibility="gone" />
+
 </RelativeLayout>
+

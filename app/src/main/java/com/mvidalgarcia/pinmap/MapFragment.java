@@ -151,13 +151,53 @@ public class MapFragment extends Fragment {
             PinWS service = new PinREST();
             //ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
             //Pin pin = service.getPinById(1);
-            Pin pin = new Pin("JJJJune 2056 in Nigeria", "Nigeria rules!",
-                    3.0, 52.431898, 14.740681, "photo_nigeria", 1508116466, "904972304704039106999");
-            service.insertPin(pin);
+            //Pin pin = new Pin("JJJJune 2056 in Nigeria", "Nigeria rules!",
+                    //3.0, 52.431898, 14.740681, "photo_nigeria", 1508116466, "904972304704039106999");
+            //service.insertPin(pin);
             //service.deletePin(1);
             ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
-            if (pin != null)
-                Log.i("RETURN", String.valueOf(pins.size()));
+            if (pins.size() != 0){
+                mMapView = (MapView) view.findViewById(R.id.mapView);
+                googleMap = mMapView.getMap();
+                for (final Pin pin: pins) {
+                    // Create marker
+                    MarkerOptions marker = new MarkerOptions().position(new LatLng(pin.getLat(), pin.getLng()))
+                            .title(pin.getTitle())
+                            .snippet("View more details");
+
+                    // Changing marker icon
+                    marker.icon(BitmapDescriptorFactory
+                            .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
+
+                    // Adding marker
+                    googleMap.addMarker(marker);
+                    // "Details" info window click listener
+                    googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+                        @Override
+                        public void onInfoWindowClick(Marker marker) {
+                            goToPinDetails(marker.getTitle());
+                        }
+                    });
+
+                    // Callback to pin form
+                    view.findViewById(R.id.pin_button).setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            goToPinForm();
+                        }
+                    });
+
+                    // Place camera in last marker position (no zoom)
+                    if (pins.lastIndexOf(pin) == pins.size()-1){
+                        CameraPosition cameraPosition = new CameraPosition.Builder()
+                                .target(new LatLng(pin.getLat(), pin.getLng())).build();
+                        googleMap.animateCamera(CameraUpdateFactory
+                                .newCameraPosition(cameraPosition));
+                    }
+
+                }
+            }
+
         }
         catch (Exception e){
             e.printStackTrace();

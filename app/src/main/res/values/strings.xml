@@ -4,5 +4,9 @@
     <string name="title_activity_maps">Map</string>
     <!-- Pin form -->
     <string name="title">Title</string>
-    <string name="comments">Comments</string>
+    <string name="description">Description</string>
+    <string name="pick_photo">PICK PHOTO</string>
+    <string name="pin_it">Pin it!</string>
+    <string name="search_place">Search place</string>
+    <string name="gps">GPS</string>
 </resources>
