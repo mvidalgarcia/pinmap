@@ -9,4 +9,7 @@
     <string name="pin_it">Pin it!</string>
     <string name="search_place">Search place</string>
     <string name="gps">GPS</string>
+    <!-- Upload activity -->
+    <string name="load_picture">Load Picture</string>
+    <string name="upload">Upload</string>
 </resources>

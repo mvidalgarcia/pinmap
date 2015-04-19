@@ -84,7 +84,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/formTitle"
         android:hint="@string/title"
-        android:textSize="35dp"
+        android:textSize="30dp"
         android:singleLine="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"

@@ -63,12 +63,7 @@ public class MapFragment extends Fragment {
 
         // Adding marker
         googleMap.addMarker(marker);
-        /*
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-        */
+
 
         // Place camera in last marker position (no zoom)
         CameraPosition cameraPosition = new CameraPosition.Builder()
@@ -147,7 +142,7 @@ public class MapFragment extends Fragment {
                 .permitAll().build();
         StrictMode.setThreadPolicy(policy);
         try {
-            Log.i("MyNavidationDrawer", "PROBANDO METODO JAVA");
+            Log.i("MyNavidationDrawer", "Getting pins from web service...");
             PinWS service = new PinREST();
             //ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
             //Pin pin = service.getPinById(1);
