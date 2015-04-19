@@ -54,7 +54,7 @@ public class PinFormFragment extends Fragment {
         });
 
         /* Callbacks to manage radio buttons */
-
+        /*
         view.findViewById(R.id.radioButtonSearch).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,7 +70,7 @@ public class PinFormFragment extends Fragment {
                 place.setVisibility(View.GONE);
             }
         });
-
+        */
 
          /* Callback to create new pin */
 

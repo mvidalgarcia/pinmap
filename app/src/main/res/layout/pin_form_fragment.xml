@@ -56,16 +56,9 @@
         <RadioButton
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/gps"
-            android:id="@+id/radioButtonGPS"
-            android:checked="true" />
-
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="@string/search_place"
             android:id="@+id/radioButtonSearch"
-            android:checked="false" />
+            android:checked="true" />
 
     </RadioGroup>
 
@@ -97,8 +90,7 @@
         android:inputType="text"
         android:layout_alignBottom="@+id/radioGroup"
         android:layout_alignLeft="@+id/new_pin_button"
-        android:layout_alignStart="@+id/new_pin_button"
-        android:visibility="gone" />
+        android:layout_alignStart="@+id/new_pin_button"/>
 
 </RelativeLayout>
 
