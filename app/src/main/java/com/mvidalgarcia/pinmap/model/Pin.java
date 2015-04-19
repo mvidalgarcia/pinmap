@@ -6,7 +6,7 @@ package com.mvidalgarcia.pinmap.model;
 public class Pin {
     private int id;
     private String title;
-    private double rating;
+    private float rating;
     private String description;
     private double lat;
     private double lng;
@@ -15,7 +15,7 @@ public class Pin {
     private String googleplusId;
 
     public Pin(int id, String title, String description,
-               double rating, double lat, double lng,
+               float rating, double lat, double lng,
                String photo, int date, String googleplusId) {
         this.id = id;
         this.title = title;
@@ -29,7 +29,7 @@ public class Pin {
     }
 
     public Pin(String title, String description,
-               double rating, double lat, double lng,
+               float rating, double lat, double lng,
                String photo, int date, String googleplusId) {
         this.title = title;
         this.description = description;
@@ -49,7 +49,7 @@ public class Pin {
         this.id = id;
     }
 
-    public double getRating() {
+    public float getRating() {
         return rating;
     }
 

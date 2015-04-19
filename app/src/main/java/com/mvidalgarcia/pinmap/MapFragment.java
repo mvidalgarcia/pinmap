@@ -23,6 +23,7 @@ import com.mvidalgarcia.pinmap.ws.impl.PinREST;
 
 import java.util.AbstractList;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import it.neokree.materialnavigationdrawer.MaterialNavigationDrawer;
 
@@ -30,6 +31,7 @@ public class MapFragment extends Fragment {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    HashMap<Marker, Integer> markerHashMap = new HashMap<>();
 
     @Override
     public View onCreateView(final LayoutInflater inflater, final ViewGroup container,
@@ -48,67 +50,21 @@ public class MapFragment extends Fragment {
             e.printStackTrace();
         }
 
-        googleMap = mMapView.getMap();
-        // latitude and longitude
-        double latitude = 17.385044;
-        double longitude = 78.486671;
-
-        // Create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("My trip to New Delhi").snippet("View more details");
-
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
-        // Adding marker
-        googleMap.addMarker(marker);
-
-
-        // Place camera in last marker position (no zoom)
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
-
-        // Disable toolbar (shown when marker is tapped)
-        googleMap.getUiSettings().setMapToolbarEnabled(false);
-
-
-        // "Details" info window click listener
-        googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
-            @Override
-            public void onInfoWindowClick(Marker marker) {
-                goToPinDetails("My trip to New Delhi");
-            }
-        });
-
-
-        // Callback to pin form
-        v.findViewById(R.id.pin_button).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                goToPinForm();
-            }
-        });
-
         return v;
     }
 
     public void goToPinForm() {
         Fragment fragment = new PinFormFragment();
-        //Bundle data = new Bundle();
-        //data.putString("Test","Banana");
-        //fragment.setArguments(data);
         ((MaterialNavigationDrawer)this.getActivity()).setFragmentChild(fragment,"Pin new place!");
     }
 
-    public void goToPinDetails(String pinTitle) {
+    public void goToPinDetails(Marker marker) {
+        int id = markerHashMap.get(marker);
         Fragment fragment = new PinDetailsFragment();
-        //Bundle data = new Bundle();
-        //data.putString("Test","Banana");
-        //fragment.setArguments(data);
-        ((MaterialNavigationDrawer)this.getActivity()).setFragmentChild(fragment, pinTitle);
+        Bundle data = new Bundle();
+        data.putInt("id", id);
+        fragment.setArguments(data);
+        ((MaterialNavigationDrawer)this.getActivity()).setFragmentChild(fragment, marker.getTitle());
     }
 
     @Override
@@ -144,16 +100,11 @@ public class MapFragment extends Fragment {
         try {
             Log.i("MyNavidationDrawer", "Getting pins from web service...");
             PinWS service = new PinREST();
-            //ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
-            //Pin pin = service.getPinById(1);
-            //Pin pin = new Pin("JJJJune 2056 in Nigeria", "Nigeria rules!",
-                    //3.0, 52.431898, 14.740681, "photo_nigeria", 1508116466, "904972304704039106999");
-            //service.insertPin(pin);
-            //service.deletePin(1);
             ArrayList<Pin> pins = (ArrayList<Pin>)service.getPinsByGooglePlusId("904972304704039106999");
             if (pins.size() != 0){
                 mMapView = (MapView) view.findViewById(R.id.mapView);
                 googleMap = mMapView.getMap();
+                googleMap.getUiSettings().setMapToolbarEnabled(false);
                 for (final Pin pin: pins) {
                     // Create marker
                     MarkerOptions marker = new MarkerOptions().position(new LatLng(pin.getLat(), pin.getLng()))
@@ -165,12 +116,16 @@ public class MapFragment extends Fragment {
                             .defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
 
                     // Adding marker
-                    googleMap.addMarker(marker);
+                    Marker finalMarker = googleMap.addMarker(marker);
+
+                    // Save marker with its Pin id
+                    markerHashMap.put(finalMarker, pin.getId());
+
                     // "Details" info window click listener
                     googleMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
                         @Override
                         public void onInfoWindowClick(Marker marker) {
-                            goToPinDetails(marker.getTitle());
+                            goToPinDetails(marker);
                         }
                     });
 
