@@ -60,8 +60,8 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="81dp"
-        android:layout_height="27dp"
+        android:layout_width="75dp"
+        android:layout_height="36dp"
         android:text="DELETE"
         android:id="@+id/delete_pin"
         android:layout_gravity="center_horizontal"
